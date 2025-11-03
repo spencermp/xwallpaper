@@ -25,6 +25,14 @@ xwallpaper_CPPFLAGS += @RANDR_CFLAGS@
 xwallpaper_LDADD += @RANDR_LIBS@
 endif
 
+if BUILD_AVIF
+xwallpaper_SOURCES += load_avif.c
+xwallpaper_CPPFLAGS += @AVIF_CFLAGS@
+xwallpaper_LDADD += @AVIF_LIBS@
+else
+EXTRA_DIST += load_avif.c
+endif
+
 if BUILD_JPEG
 xwallpaper_SOURCES += load_jpeg.c
 xwallpaper_CPPFLAGS += @JPEG_CFLAGS@

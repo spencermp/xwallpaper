@@ -102,6 +102,30 @@ AS_IF([test "$jpeg_ok" = yes],
 )
 AM_CONDITIONAL(BUILD_JPEG, [test "$jpeg_ok" = yes])
 
+# Check if AVIF support is requested
+AC_MSG_CHECKING(whether AVIF support is requested)
+AC_ARG_WITH([avif],
+  [AS_HELP_STRING([--without-avif], [disable AVIF support])],
+  [
+   if test "$withval" = no ; then
+     avif_support=no
+   else
+     avif_support=yes
+   fi
+  ],
+  [ avif_support=auto ]
+)
+AC_MSG_RESULT($avif_support)
+if test "$avif_support" != no ; then
+  PKG_CHECK_MODULES(AVIF, libavif >= 1.2, [avif_ok="yes"], [avif_ok="no"])
+else
+  avif_ok="no"
+fi
+AS_IF([test "$avif_ok" = yes],
+  [AC_DEFINE(WITH_AVIF,[1],[Define to 1 if you want AVIF support.])],[]
+)
+AM_CONDITIONAL(BUILD_AVIF, [test "$avif_ok" = yes])
+
 # Check if PNG support is requested
 AC_MSG_CHECKING(whether PNG support is requested)
 AC_ARG_WITH([png],

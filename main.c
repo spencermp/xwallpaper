@@ -71,6 +71,12 @@ load_pixman_image(xcb_connection_t *c, xcb_screen_t *screen, FILE *fp)
 
 	pixman_image = NULL;
 
+#ifdef WITH_AVIF
+	if (pixman_image == NULL) {
+		rewind(fp);
+		pixman_image = load_avif(fp);
+	}
+#endif /* WITH_AVIF */
 #ifdef WITH_PNG
 	if (pixman_image == NULL) {
 		rewind(fp);
