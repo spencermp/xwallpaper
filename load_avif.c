@@ -82,7 +82,8 @@ do_load_avif(FILE *fp, uint32_t **pixels)
 	width = decoder->image->width;
 	height = decoder->image->height;
 	if (decoder->image->depth != 8) {
-		debug("AVIF bit depth must be 8 to be supported");
+		errx(1, "AVIF bit depth must be 8 to be supported (was %d)",
+		    decoder->image->depth);
 		avifDecoderDestroy(decoder);
 		free(fb);
 		return NULL;
